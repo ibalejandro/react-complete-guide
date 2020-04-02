@@ -42,15 +42,22 @@ const app = (props) => {
         <div className="App">
             <h1>Hi, I'm a React App</h1>
             <p>This is really working!</p>
-            <button className="SwitchNameButton" onClick={() => {switchNameHandler("Alejo")}}>Switch Name</button>
+            <button className="SwitchNameButton"
+                    onClick={() => {
+                        switchNameHandler("Alejo")
+                    }}>
+                Switch Name
+            </button>
             <Person
                 name={personsState.persons[0].name}
                 age={personsState.persons[0].age}
-                switchNameHandler={() => {switchNameHandler("Alejo")}}
-                nameChangedHandler={(event) => {nameChangedHandler(event)}}/>
-            <Person
-                name={personsState.persons[1].name}
-                age={personsState.persons[1].age}>My Hobbies: Racing</Person>
+                switchNameHandler={() => {
+                    switchNameHandler("Alejo")
+                }}
+                nameChangedHandler={(event) => {
+                    nameChangedHandler(event)
+                }}/>
+            <Person name={personsState.persons[1].name} age={personsState.persons[1].age}>My Hobbies: Racing</Person>
             <Person name={personsState.persons[2].name} age={personsState.persons[2].age}/>
         </div>
     );
