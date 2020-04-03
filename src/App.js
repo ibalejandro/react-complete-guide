@@ -5,9 +5,9 @@ import Person from './Person/Person'
 const app = (props) => {
     const [personsState, setPersonsState] = useState({
         persons: [
-            {name: "Max", age: 28},
-            {name: "Manu", age: 29},
-            {name: "Stephanie", age: 26},
+            {id: "p1", name: "Max", age: 28},
+            {id: "p2", name: "Manu", age: 29},
+            {id: "p3", name: "Stephanie", age: 26},
         ]
     });
 
@@ -15,28 +15,61 @@ const app = (props) => {
         otherState: "some other value"
     });
 
+    const [showPersonsState, setShowPersonsState] = useState({
+        showPersons: false
+    });
+
     console.log(personsState, otherState);
 
-    const switchNameHandler = (newName) => {
-        // console.log("Was Clicked!");
+    const nameChangedHandler = (event, personId) => {
+        let personIndex = personsState.persons.findIndex(p => {
+            return p.id === personId;
+        });
+        let persons = [...personsState.persons];
+        persons[personIndex].name = event.target.value;
         setPersonsState({
-            persons: [
-                {name: newName, age: 28},
-                {name: "Manu", age: 29},
-                {name: "Stephanie", age: 27},
-            ]
+            persons: persons
         });
     };
 
-    const nameChangedHandler = (event) => {
-        setPersonsState({
-            persons: [
-                {name: event.target.value, age: 28},
-                {name: "Manu", age: 29},
-                {name: "Stephanie", age: 27},
-            ]
+    const togglePersonsHandler = () => {
+        let showPersons = showPersonsState.showPersons;
+        showPersons = !showPersons;
+        setShowPersonsState({
+            showPersons: showPersons
         });
     };
+
+    const deletePersonHandler = (personIndex) => {
+        let persons = [...personsState.persons];
+        persons.splice(personIndex, 1);
+        setPersonsState({
+            persons: persons
+        });
+    };
+
+    let persons = null;
+    if (showPersonsState.showPersons) {
+        persons = (
+            <div>
+                {personsState.persons.map((person, index) => {
+                    return (
+                        <Person
+                            key={person.id}
+                            name={person.name}
+                            age={person.age}
+                            nameChangedHandler={(event) => {
+                                nameChangedHandler(event, person.id)
+                            }}
+                            deletePersonHandler={() => {
+                                deletePersonHandler(index)
+                            }}/>
+                    );
+                })
+                }
+            </div>
+        );
+    }
 
     return (
         <div className="App">
@@ -44,21 +77,10 @@ const app = (props) => {
             <p>This is really working!</p>
             <button className="SwitchNameButton"
                     onClick={() => {
-                        switchNameHandler("Alejo")
-                    }}>
-                Switch Name
+                        togglePersonsHandler()
+                    }}>Toggle Persons
             </button>
-            <Person
-                name={personsState.persons[0].name}
-                age={personsState.persons[0].age}
-                switchNameHandler={() => {
-                    switchNameHandler("Alejo")
-                }}
-                nameChangedHandler={(event) => {
-                    nameChangedHandler(event)
-                }}/>
-            <Person name={personsState.persons[1].name} age={personsState.persons[1].age}>My Hobbies: Racing</Person>
-            <Person name={personsState.persons[2].name} age={personsState.persons[2].age}/>
+            {persons}
         </div>
     );
 }
