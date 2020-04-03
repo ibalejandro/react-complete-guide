@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import Person from './Person/Person'
+import {StyledTogglePersonsButton} from './AppStyled'
 
 const app = (props) => {
     const [personsState, setPersonsState] = useState({
@@ -22,7 +23,7 @@ const app = (props) => {
     console.log(personsState, otherState);
 
     const nameChangedHandler = (event, personId) => {
-        let personIndex = personsState.persons.findIndex(p => {
+        const personIndex = personsState.persons.findIndex(p => {
             return p.id === personId;
         });
         let persons = [...personsState.persons];
@@ -75,11 +76,12 @@ const app = (props) => {
         <div className="App">
             <h1>Hi, I'm a React App</h1>
             <p>This is really working!</p>
-            <button className="SwitchNameButton"
-                    onClick={() => {
-                        togglePersonsHandler()
-                    }}>Toggle Persons
-            </button>
+            <StyledTogglePersonsButton
+                showStyle={showPersonsState.showPersons}
+                onClick={() => {
+                    togglePersonsHandler()
+                }}>Toggle Persons
+            </StyledTogglePersonsButton>
             {persons}
         </div>
     );
