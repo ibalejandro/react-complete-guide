@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import Person from './Person/Person'
 import {StyledTogglePersonsButton} from './AppStyled'
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
 
 const app = (props) => {
     const [personsState, setPersonsState] = useState({
