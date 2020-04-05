@@ -1,6 +1,7 @@
 import React from 'react';
 import './Person.css';
 import {StyledDiv} from './PersonStyled'
+import PropTypes from 'prop-types'
 
 
 const person = (props) => {
@@ -11,6 +12,13 @@ const person = (props) => {
             <input type="text" onChange={props.nameChangedHandler} value={props.name}/>
         </StyledDiv>
     );
-}
+};
+
+person.propTypes = {
+    deletePersonHandler: PropTypes.func,
+    name: PropTypes.string,
+    age: PropTypes.number,
+    nameChangedHandler: PropTypes.func
+};
 
 export default person;

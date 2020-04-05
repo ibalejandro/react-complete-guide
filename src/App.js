@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import './App.css';
-import Person from './Person/Person'
+import Person from './components/Person/Person'
 import {StyledTogglePersonsButton} from './AppStyled'
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
+import ErrorBoundary from './containers/ErrorBoundary/ErrorBoundary'
+import PersonList from './components/PersonList/PersonList'
+import Cockpit from './components/Cockpit/Cockpit'
 
 const app = (props) => {
     const [personsState, setPersonsState] = useState({
@@ -54,35 +56,19 @@ const app = (props) => {
     if (showPersonsState.showPersons) {
         persons = (
             <div>
-                {personsState.persons.map((person, index) => {
-                    return (
-                        <Person
-                            key={person.id}
-                            name={person.name}
-                            age={person.age}
-                            nameChangedHandler={(event) => {
-                                nameChangedHandler(event, person.id)
-                            }}
-                            deletePersonHandler={() => {
-                                deletePersonHandler(index)
-                            }}/>
-                    );
-                })
-                }
+                <PersonList
+                    persons={personsState.persons}
+                    nameChangedHandler={nameChangedHandler}
+                    deletePersonHandler={deletePersonHandler}/>
             </div>
         );
     }
 
     return (
         <div className="App">
-            <h1>Hi, I'm a React App</h1>
-            <p>This is really working!</p>
-            <StyledTogglePersonsButton
-                showStyle={showPersonsState.showPersons}
-                onClick={() => {
-                    togglePersonsHandler()
-                }}>Toggle Persons
-            </StyledTogglePersonsButton>
+            <Cockpit
+                showPersons={showPersonsState.showPersons}
+                togglePersonsHandler={togglePersonsHandler}/>
             {persons}
         </div>
     );
